@@ -70,11 +70,15 @@ main:
     nop
     // unblock thread 1
     publk s4, s0 # s4 = _publk(1)
+    nop
+    nop
     // call thread0
     call thread0
     // block thread 0
     mv s0, zero # thread_id = 0
     pblk s5, s0 # s5 = _pblk(0)
+    nop
+    nop
     la s0, _data_a
     lw s1, 0(s0) # s1 = _data_a
     la s0, _data_b
