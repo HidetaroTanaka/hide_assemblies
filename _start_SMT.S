@@ -1,13 +1,17 @@
+##define USE_EXTERN_IN_C
+#define PRINT_114514_IN_EXIT
+
 .section .text.init;
 .globl _start
 
 _start:
-  la sp, 65536  # スタックポインタ 変数格納できる場所確保
+  la sp, 32768  # スタックポインタ 変数格納できる場所確保
   call main
-  
+#ifdef PRINT_114514_IN_EXIT
   li s0, 0xFFC01000
   li s1, 0x00114514
   sw s1, 0(s0)
+#endif
 EXIT:
   j EXIT  # jump to EXIT
   

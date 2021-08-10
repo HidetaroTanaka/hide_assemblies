@@ -1,3 +1,6 @@
+#define USE_MULTI_THREAD
+#define ITERATION_NUM 25
+
     .text
     .globl _data_a
     .section    .rodata
@@ -20,7 +23,7 @@ thread0:
     addi sp, sp, -4
     sw ra, 0(sp)
     mv t0, zero
-    li t1, 25
+    li t1, ITERATION_NUM
 _thread0_LOOP:
     addi t0, t0, 1
     blt t0, t1, _thread0_LOOP
@@ -29,10 +32,11 @@ _thread0_LOOP:
     lw ra, 0(sp)
     addi sp, sp, 4
     ret
+#ifdef USE_MULTI_THREAD
 thread1:
     addi sp, sp, -4
     mv t0, zero
-    li t1, 25
+    li t1, ITERATION_NUM
 _thread1_LOOP:
     addi t0, t0, 1
     blt t0, t1, _thread1_LOOP
@@ -57,28 +61,35 @@ _success_pdall_LOOP:
     // thread1 never reach here but anyway
     addi sp, sp, 4
     ret
+#endif
     .globl main
     .type main, @function
 main:
     addi sp, sp, -4
     sw ra, 0(sp)
+    #ifdef USE_MULTI_THREAD
     // allocate thread 1
-    li s0, 1 # thread_id = 1
-    la s1, thread1
-    pallc s3, s1, s0 # s3 = _pallc(1, thread1)
+    li s1, 1 # thread_id = 1
+    la s0, thread1
+    # rs1 = addr, rs2 = thread_id
+    pallc s3, s0, s1 # s3 = _pallc(1, thread1)
     nop
     nop
     // unblock thread 1
-    publk s4, s0 # s4 = _publk(1)
+    // rs1 = thread_id
+    publk s4, s1 # s4 = _publk(1)
     nop
     nop
+    #endif
     // call thread0
     call thread0
+    #ifdef USE_MULTI_THREAD
     // block thread 0
     mv s0, zero # thread_id = 0
     pblk s5, s0 # s5 = _pblk(0)
     nop
     nop
+    #endif
     la s0, _data_a
     lw s1, 0(s0) # s1 = _data_a
     la s0, _data_b
