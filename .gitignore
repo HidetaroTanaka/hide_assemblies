@@ -1,0 +1,7 @@
+RV32FD_TEST/machine.txt
+RV32FD_TEST/build.o
+RV32FD_TEST/memory.txt
+RV32FD_TEST/test.bin
+RV32FD_TEST/test.elf
+RV32FD_TEST/test.hex
+RV32FD_TEST/test.o
