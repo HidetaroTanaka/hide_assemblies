@@ -1,0 +1,38 @@
+#include "myriscv_tests.h"
+
+    .text
+    .globl main
+    .type main, @function
+main:
+    TEST_FCLASS_D(1<<0, 0xFFF00000, 0x00000000)
+    PRINT_IF_ERR(2, a0)
+
+    TEST_FCLASS_D(1<<1, 0xBFF00000, 0x00000000)
+    PRINT_IF_ERR(3, a0)
+
+    TEST_FCLASS_D(1<<2, 0x800FFFFF, 0xFFFFFFFF)
+    PRINT_IF_ERR(4, a0)
+
+    TEST_FCLASS_D(1<<3, 0x80000000, 0x00000000)
+    PRINT_IF_ERR(5, a0)
+
+    TEST_FCLASS_D(1<<4, 0x00000000, 0x00000000)
+    PRINT_IF_ERR(6, a0)
+
+    TEST_FCLASS_D(1<<2, 0x000FFFFF, 0xFFFFFFFF)
+    PRINT_IF_ERR(7, a0)
+
+    TEST_FCLASS_D(1<<6, 0x3FF00000, 0x00000000)
+    PRINT_IF_ERR(8, a0)
+    
+    TEST_FCLASS_D(1<<7, 0x7FF00000, 0x00000000)
+    PRINT_IF_ERR(9, a0)
+
+    TEST_FCLASS_D(1<<8, 0x7FF00000, 0x00000001)
+    PRINT_IF_ERR(10, a0)
+
+    TEST_FCLASS_D(1<<9, 0x7FF80000, 0x00000000)
+    PRINT_IF_ERR(11, a0)
+
+EXIT:
+    j EXIT

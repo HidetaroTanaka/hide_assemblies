@@ -1,0 +1,56 @@
+#include "myriscv_tests.h"
+
+    .text
+    .globl main
+    .type main, @function
+main:
+    # feq.d -1.36, -1.36
+    TEST_FP_CMP_OP_D(feq.d, 1, 0xBFF5C28F, 0x5C28F5C3, 0xBFF5C28F, 0x5C28F5C3)
+    PRINT_IF_ERR(2, a0)
+    # fle.d -1.36, -1.36
+    TEST_FP_CMP_OP_D(fle.d, 1, 0xBFF5C28F, 0x5C28F5C3, 0xBFF5C28F, 0x5C28F5C3)
+    PRINT_IF_ERR(3, a0)
+    # flt.d -1.36, -1.36
+    TEST_FP_CMP_OP_D(flt.d, 0, 0xBFF5C28F, 0x5C28F5C3, 0xBFF5C28F, 0x5C28F5C3)
+    PRINT_IF_ERR(4, a0)
+
+    # feq.d -1.37, -1.36
+    TEST_FP_CMP_OP_D(feq.d, 0, 0xBFF5EB85, 0x1EB851EC, 0xBFF5C28F, 0x5C28F5C3)
+    PRINT_IF_ERR(5, a0)
+    # fle.d -1.37, -1.36
+    TEST_FP_CMP_OP_D(fle.d, 1, 0xBFF5EB85, 0x1EB851EC, 0xBFF5C28F, 0x5C28F5C3)
+    PRINT_IF_ERR(6, a0)
+    # flt.d -1.37, -1.36
+    TEST_FP_CMP_OP_D(flt.d, 1, 0xBFF5EB85, 0x1EB851EC, 0xBFF5C28F, 0x5C28F5C3)
+    PRINT_IF_ERR(7, a0)
+
+    # feq.d NaN, 0
+    TEST_FP_CMP_OP_D(feq.d, 0, 0x7FFC0000, 0x00000000, 0x00000000, 0x00000000)
+    PRINT_IF_ERR(8, a0)
+    # feq.d NaN, NaN
+    TEST_FP_CMP_OP_D(feq.d, 0, 0x7FFC0000, 0x00000000, 0x7FFC0000, 0x00000000)
+    PRINT_IF_ERR(9, a0)
+    # feq.d sNaN, 0
+    TEST_FP_CMP_OP_D(feq.d, 0, 0x7FF00000, 0x00000001, 0x00000000, 0x00000000)
+    PRINT_IF_ERR(10, a0)
+
+    # flt.d NaN, 0
+    TEST_FP_CMP_OP_D(flt.d, 0, 0x7FFC0000, 0x00000000, 0x00000000, 0x00000000)
+    PRINT_IF_ERR(11, a0)
+    # flt.d NaN, NaN
+    TEST_FP_CMP_OP_D(flt.d, 0, 0x7FFC0000, 0x00000000, 0x7FFC0000, 0x00000000)
+    PRINT_IF_ERR(12, a0)
+    # flt.d sNaN, 0
+    TEST_FP_CMP_OP_D(flt.d, 0, 0x7FF00000, 0x00000001, 0x00000000, 0x00000000)
+    PRINT_IF_ERR(13, a0)
+    # fle.d NaN, 0
+    TEST_FP_CMP_OP_D(fle.d, 0, 0x7FFC0000, 0x00000000, 0x00000000, 0x00000000)
+    PRINT_IF_ERR(14, a0)
+    # fle.d NaN, NaN
+    TEST_FP_CMP_OP_D(fle.d, 0, 0x7FFC0000, 0x00000000, 0x7FFC0000, 0x00000000)
+    PRINT_IF_ERR(15, a0)
+    # fle.d sNaN, 0
+    TEST_FP_CMP_OP_D(fle.d, 0, 0x7FF00000, 0x00000001, 0x00000000, 0x00000000)
+    PRINT_IF_ERR(16, a0)
+EXIT:
+    j EXIT

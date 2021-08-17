@@ -112,6 +112,89 @@
     snez a1, a1; \
     or a0, a0, a1;
 
+// a0 = !(fclass_d(rs1) == rd);
+// inst: Double -> Int
+#define TEST_FCLASS_D(rd, rs1_up, rs1_down) \
+    li t0, rs1_up; \
+    li t1, rs1_down; \
+    li t2, rd; \
+    addi t3, sp, -8; \
+    sw t1, 0(t3); \
+    sw t0, 4(t3); \
+    fld ft0, 0(t3); \
+    fclass.d t4, ft0; \
+    xor a0, t4, t2; \
+    snez a0, a0;
+
+// a0 = !(fcmp_inst(rs1, rs2) == rd);
+// inst: (Double, Double) -> Int
+#define TEST_FP_CMP_OP_D(fcmp_inst, rd, rs1_up, rs1_down, rs2_up, rs2_down) \
+    li t0, rs1_up; \
+    li t1, rs1_down; \
+    li t2, rs2_up; \
+    li t3, rs2_down; \
+    li t4, rd; \
+    addi t5, sp, -16; \
+    sw t3, 0(t5); \
+    sw t2, 4(t5); \
+    sw t1, 8(t5); \
+    sw t0, 12(t5); \
+    fld ft0, 8(t5); \
+    fld ft1, 0(t5); \
+    fcmp_inst t6, ft0, ft1; \
+    xor a0, t4, t6; \
+    snez a0, a0;
+
+// a0 = !(inst(rs1) == rd);
+// inst: Int -> Double
+#define TEST_INT_FP_OP_D(inst, rd_up, rd_down, rs1) \
+    li t0, rs1; \
+    li t1, rd_up; \
+    li t2, rd_down; \
+    inst ft1, t0; \
+    addi t3, sp, -8; \
+    fsd ft1, 0(t3); \
+    lw t4, 4(t3); \
+    lw t5, 0(t3); \
+    xor a0, t1, t4; \
+    snez a0, a0; \
+    xor a1, t2, t5; \
+    snez a1, a1; \
+    or a0, a0, a1;
+
+// a0 = !(fcvt_s_d(rs1) == rd);
+// inst: Double -> Float
+#define TEST_FCVT_S_D(rd, rs1_up, rs1_down) \
+    li t0, rs1_up; \
+    li t1, rs1_down; \
+    li t2, rd; \
+    addi t3, sp, -8; \
+    sw t1, 0(t3); \
+    sw t0, 4(t3); \
+    fld ft0, 0(t3); \
+    fcvt.s.d ft1, ft0; \
+    fmv.x.w t4, ft1; \
+    xor a0, t2, t4; \
+    snez a0, a0;
+
+// a0 = !(fcvt_d_s(rs1) == rd);
+// inst: Float -> Double
+#define TEST_FCVT_D_S(rd_up, rd_down, rs1) \
+    li t0, rs1; \
+    li t1, rd_up; \
+    li t2, rd_down; \
+    fmv.w.x ft0, t0; \
+    fcvt.d.s ft1, ft0; \
+    addi t3, sp, -8; \
+    fsd ft1, 0(t3); \
+    lw t4, 4(t3); \
+    lw t5, 0(t3); \
+    xor a0, t1, t4; \
+    snez a0, a0; \
+    xor a1, t2, t5; \
+    snez a1, a1; \
+    or a0, a0, a1;
+
 #endif
 
 // print(res * val)
