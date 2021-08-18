@@ -195,6 +195,72 @@
     snez a1, a1; \
     or a0, a0, a1;
 
+// a0 = !(inst(rs1, roundmode) == rd);
+// inst: (Double, roundmode) -> Int
+#define TEST_FP_INT_OP_D(inst, rd, rs1_up, rs1_down, roundmode) \
+    li t0, rs1_up; \
+    li t1, rs1_down; \
+    li t2, rd; \
+    addi t3, sp, -8; \
+    sw t1, 0(t3); \
+    sw t0, 4(t3); \
+    fld ft0, 0(t3); \
+    inst t4, ft0, roundmode; \
+    xor a0, t2, t4; \
+    snez a0, a0;
+
+// a0 = !(inst(rs1) == rd);
+// inst: Double -> Double
+#define TEST_FP_OP1_D(inst, rd_up, rd_down, rs1_up, rs1_down) \
+    li t0, rs1_up; \
+    li t1, rs1_down; \
+    li t2, rd_up; \
+    li t3, rd_down; \
+    addi t4, sp, -8; \
+    sw t1, 0(t4); \
+    sw t0, 4(t4); \
+    fld ft0, 0(t4); \
+    inst ft1, ft0; \
+    fsd ft1, 0(t4); \
+    lw t5, 4(t4); \
+    lw t6, 0(t4); \
+    xor a0, t2, t5; \
+    snez a0, a0; \
+    xor a1, t3, t6; \
+    snez a1, a1; \
+    or a0, a0, a1;
+
+// a0 = !(inst(rs1, rs2, rs3) == rd);
+// inst: (Double, Double, Double) -> Double
+#define TEST_FP_OP3_D(inst, rd_up, rd_down, rs1_up, rs1_down, rs2_up, rs2_down, rs3_up, rs3_down) \
+    li t0, rs1_up; \
+    li t1, rs1_down; \
+    li t2, rs2_up; \
+    li t3, rs2_down; \
+    li t4, rs3_up; \
+    li t5, rs3_down; \
+    addi t6, sp, -24; \
+    sw t5, 0(t6); \
+    sw t4, 4(t6); \
+    sw t3, 8(t6); \
+    sw t2, 12(t6); \
+    sw t1, 16(t6); \
+    sw t0, 20(t6); \
+    fld ft0, 16(t6); \
+    fld ft1, 8(t6); \
+    fld ft2, 0(t6); \
+    inst ft3, ft0, ft1, ft2; \
+    fsd ft3, 0(t6); \
+    li t0, rd_up; \
+    li t1, rd_down; \
+    lw t2, 4(t6); \
+    lw t3, 0(t6); \
+    xor a0, t0, t2; \
+    snez a0, a0; \
+    xor a1, t1, t3; \
+    snez a1, a1; \
+    or a0, a0, a1;
+
 #endif
 
 // print(res * val)
