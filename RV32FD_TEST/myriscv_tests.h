@@ -261,6 +261,42 @@
     snez a1, a1; \
     or a0, a0, a1;
 
+#define TEST_FSGNJS(rd_down, rs1_up, rs1_down, rs2_up, rs2_down) \
+    li t0, rs1_up; \
+    li t1, rs1_down; \
+    li t2, rs2_up; \
+    li t3, rs2_down; \
+    li t5, rd_down; \
+    addi t6, sp, -16; \
+    sw t3, 0(t6); \
+    sw t2, 4(t6); \
+    sw t1, 8(t6); \
+    sw t0, 12(t6); \
+    fld ft0, 8(t6); \
+    fld ft1, 0(t6); \
+    fsgnj.s ft2, ft0, ft1; \
+    fmv.x.s a0, ft2; \
+    xor a0, a0, t5; \
+    snez a0, a0;
+
+#define TEST_FSGNJD_SP(rd_down, rs1_up, rs1_down, rs2_up, rs2_down) \
+    li t0, rs1_up; \
+    li t1, rs1_down; \
+    li t2, rs2_up; \
+    li t3, rs2_down; \
+    li t5, rd_down; \
+    addi t6, sp, -16; \
+    sw t3, 0(t6); \
+    sw t2, 4(t6); \
+    sw t1, 8(t6); \
+    sw t0, 12(t6); \
+    fld ft0, 8(t6); \
+    fld ft1, 0(t6); \
+    fsgnj.d ft2, ft0, ft1; \
+    fmv.x.s a0, ft2; \
+    xor a0, a0, t5; \
+    snez a0, a0;
+    
 #endif
 
 // print(res * val)
