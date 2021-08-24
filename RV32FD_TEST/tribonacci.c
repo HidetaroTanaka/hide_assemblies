@@ -9,7 +9,7 @@
 double loadDouble(unsigned int up, unsigned int down) {
     double val = 0;
     unsigned int* ptr;
-    ptr = &val;
+    ptr = (unsigned int*)&val;
     *ptr = down;
     *(ptr+1) = up;
     return val;
@@ -17,7 +17,7 @@ double loadDouble(unsigned int up, unsigned int down) {
 float loadFloat(unsigned int num) {
     float val = 0;
     unsigned int* ptr;
-    ptr = &val;
+    ptr = (unsigned int*)&val;
     *ptr = num;
     return val;
 }
