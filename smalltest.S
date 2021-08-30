@@ -1,4 +1,4 @@
-#define USE_MULTI_THREAD
+//#define USE_MULTI_THREAD
 
 #ifdef USE_MULTI_THREAD
     .globl thread1
@@ -20,12 +20,14 @@ main:
     pallc s3, s0, s1 # s3 = _pallc(1, thread1)
     nop
     nop
+    nop
     publk s4, s1 # s4 = _publk(1)
+    nop
     nop
     nop
 #endif
     li t0, 0
-    li t1, 10
+    li t1, 4
 main_LOOP_start:
     beq t0, t1, main_LOOP_end
     addi t0, t0, 1
