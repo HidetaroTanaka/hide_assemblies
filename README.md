@@ -19,7 +19,7 @@ $ ./build_for_SMT.sh median_main.c
 C言語ファイルをビルドする場合，`build_for_SMT.sh`スクリプトのコメントアウトしてるところを有効にすると`smt_test.S`にC言語からアセンブリ言語へのコンパイル結果が出力される．
 
 # アセンブリ言語・C言語ビルド方法（D拡張プロセッサ）
-こちらは通常（少なくともD拡張対応）のriscv用gccがあれば良い．V拡張の追加を予定しているのでhttps://github.com/a163236/docker_folder/tree/master/riscv_vector_toolchain から入手することをおすすめする．
+こちらは通常（少なくともD拡張対応）のriscv用gccがあれば良い．V拡張の追加を予定しているのでhttps://github.com/a163236/rvv_toolchain から入手することをおすすめする．
 
 上記と同様に，事前に`build.S`をオブジェクトファイルに変換する．
 ```
