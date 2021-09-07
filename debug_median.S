@@ -70,8 +70,10 @@ median:
     la t5, result_data # int *out_ptr = result_data;
     li t6, 19
     sw zero, 0(t5) # *out_ptr = 0;
+    # i = 1 to 18
+    # result_data[i]への書込を行う．
 median_LOOP:
-    bge t3, t6, median_EXIT_LOOP # if(i >= 20) goto median_EXIT_LOOP;
+    bge t3, t6, median_EXIT_LOOP # if(i >= 19) goto median_EXIT_LOOP;
     addi t4, t4, 4 # in_ptr++;
     addi t5, t5, 4 # out_ptr++;
     lw t0, -4(t4) # a = *(in_ptr-1);
@@ -123,6 +125,9 @@ median_LOOP_cont:
 median_EXIT_LOOP:
     addi t5, t5, 4
     sw zero, 0(t5)
+    #ifdef USE_DEBUG_REG
+    mv s11, zero
+    #endif
     lw ra, 0(sp)
     addi sp, sp, 4
     ret
