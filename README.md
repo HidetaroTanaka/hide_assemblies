@@ -1,5 +1,5 @@
 # hide_assemblies
-デバッグに使うファイル群になると思う
+とりあえずいろんなものをここに入れてる
 
 assembliesって書いてあるけどC言語もあります
 
@@ -29,6 +29,9 @@ $ riscv64-unknown-elf-gcc -march=rv32imfd -mabi=ilp32  -c -o build.o build.S
 ```
 $ ./buildall.sh tribonacci.c
 ```
+
+# HAVE_FUN_WITH_MICROBLAZE
+MicroBlazeでいろいろやる用
 
 # 参考資料(Reference)
 
