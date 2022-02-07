@@ -1,9 +1,5 @@
-# hide_assemblies
+# hide_toybox
 とりあえずいろんなものをここに入れてる
-
-assembliesって書いてあるけどC言語もあります
-
-これらのファイルはriscv-testsのベンチマークを参考に作成しています．
 
 # アセンブリ言語・C言語ビルド方法（SMTプロセッサ）
 スレッド制御命令を使用する場合，まずSMTプロセッサ対応gccコンパイラを入手する必要がある．https://github.com/a163236/riscv-gnu-toolchain で入手可能だが，https://hub.docker.com/r/a163236/semp_riscv_toolchain のDockerを用いればすぐに使うことができる．
@@ -29,6 +25,8 @@ $ riscv64-unknown-elf-gcc -march=rv32imfd -mabi=ilp32  -c -o build.o build.S
 ```
 $ ./buildall.sh tribonacci.c
 ```
+
+浮動小数点テストのファイルはriscv-testsのベンチマークを参考に作成しています．
 
 # HAVE_FUN_WITH_MICROBLAZE
 MicroBlazeでいろいろやる用
