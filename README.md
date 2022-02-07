@@ -33,6 +33,13 @@ $ ./buildall.sh tribonacci.c
 # HAVE_FUN_WITH_MICROBLAZE
 MicroBlazeでいろいろやる用
 
+# CHISEL_BlackBoxInlineRTL
+ChiselのBlackBoxInlineを使ったテストのやり方．次のようにVerilatorBackendAnnotationとかいうのを付ければ良い
+
+```scala
+test(new BlackBoxInlineRTL).withAnnotations(Seq(VerilatorBackendAnnotation)) { c =>
+```
+
 # 参考資料(Reference)
 
 https://github.com/riscv/riscv-tests
